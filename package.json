@@ -1,0 +1,40 @@
+{
+  "name": "navega-proxy-browser",
+  "version": "0.1.0",
+  "description": "Desktop browser with enforced proxy routing built with Electron.",
+  "main": "src/main/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "lint": "echo 'No lint configured'",
+    "package:win": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.navega.proxybrowser",
+    "productName": "Navega Proxy Browser",
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ]
+    }
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "csv-parse": "^5.5.6",
+    "electron-store": "^10.0.1",
+    "geoip-lite": "^1.4.10",
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.6",
+    "socks-proxy-agent": "^8.0.5"
+  },
+  "devDependencies": {
+    "electron": "^32.3.0",
+    "electron-builder": "^24.13.3"
+  }
+}
