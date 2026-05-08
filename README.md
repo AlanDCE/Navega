@@ -1,44 +1,48 @@
-# ProxyBrowser Pro (Navega)
+# Navega Proxy Browser
 
-Navegador Electron orientado a privacidad con **proxy obligatorio**, **kill switch**, aislamiento de perfiles por proxy y verificación de fugas.
+Navegador de escritorio basado en Electron con enrutamiento obligatorio por proxy, kill switch, aislamiento por perfil y panel de leak test.
 
-## Ejecutar
+## Características
+- Dashboard con estado de proxy, IP pública, latencia y privacidad.
+- Carga de proxies `.txt`, `.json`, `.csv`.
+- Soporte HTTP/HTTPS/SOCKS4/SOCKS5 con y sin autenticación.
+- Kill switch: bloquea navegación si no hay proxy operativo.
+- Leak test básico (IP consistency, WebRTC/DNS/geoloc señales).
+- Limpieza de caché y datos por perfil.
 
+## Requisitos
+- Node.js 20+
+- npm 10+
+- Windows/macOS/Linux (build instalable objetivo: Windows)
+
+## Instalación
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
-## Compilar para Windows
+## Uso
+1. Importar archivo de proxies.
+2. Probar proxies.
+3. Seleccionar proxy funcional.
+4. Ejecutar Leak Test.
 
-```bash
-npm run package:win
-```
+## Formato de proxies
+Ver `docs/PROXY_FORMAT.md`.
 
-## Seguridad implementada
+## Scripts
+- `npm run dev`
+- `npm run build`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run dist`
+- `npm run dist:win`
 
-- Kill switch: si no hay proxy funcional activo, navegación bloqueada automáticamente.
-- Proxy obligatorio para todo tráfico HTTP/HTTPS de la sesión.
-- Política WebRTC endurecida (`disable_non_proxied_udp`).
-- Geolocalización y permisos sensibles bloqueados por defecto.
-- Leak test interno (ipify/ifconfig/ipinfo + consistencia).
-- Indicadores visibles de estado de proxy, leak test y bloqueo.
-- Separación por partición `persist:proxy-<id>` para aislar datos por proxy.
+## Kill switch
+Si el proxy activo cae o se detecta fuga crítica, la navegación HTTP/HTTPS se cancela automáticamente.
 
-## Formatos soportados
-
-- HTTP / HTTPS / SOCKS4 / SOCKS5
-- `ip:puerto`
-- `ip:puerto:user:pass`
-- `http://user:pass@ip:puerto`
-- `socks5://ip:puerto`
-
-## Limitaciones reales
-
-El fingerprinting avanzado no puede ocultarse al 100% solo con configuración de Electron/Chromium.
-Para máxima privacidad real, combinar con sistema operativo endurecido, red aislada y validaciones externas periódicas.
+## Leak test
+Evalúa IP visible, consistencia entre endpoints, señales de WebRTC/DNS/geolocalización y marca nivel de riesgo.
 
 ## Uso legítimo
-
-Privacidad, QA, verificación geográfica y pruebas web legítimas.
-No se incluye automatización de abuso/fraude.
+Proyecto para privacidad defensiva y pruebas de red legítimas. No promete anonimato absoluto.
