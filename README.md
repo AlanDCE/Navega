@@ -1,52 +1,44 @@
-# Navega Proxy Browser
+# ProxyBrowser Pro (Navega)
 
-Aplicación de escritorio con Electron + Chromium + Node.js que fuerza el uso de proxy para navegar.
+Navegador Electron orientado a privacidad con **proxy obligatorio**, **kill switch**, aislamiento de perfiles por proxy y verificación de fugas.
 
-## Instalación
+## Ejecutar
 
 ```bash
 npm install
 npm start
 ```
 
-## Compilar en Windows
+## Compilar para Windows
 
 ```bash
 npm run package:win
 ```
 
-Genera un binario portable con `electron-builder` en `dist/`.
+## Seguridad implementada
 
-## Uso básico
+- Kill switch: si no hay proxy funcional activo, navegación bloqueada automáticamente.
+- Proxy obligatorio para todo tráfico HTTP/HTTPS de la sesión.
+- Política WebRTC endurecida (`disable_non_proxied_udp`).
+- Geolocalización y permisos sensibles bloqueados por defecto.
+- Leak test interno (ipify/ifconfig/ipinfo + consistencia).
+- Indicadores visibles de estado de proxy, leak test y bloqueo.
+- Separación por partición `persist:proxy-<id>` para aislar datos por proxy.
 
-1. Haz clic en **Importar proxies** y selecciona un archivo `.txt`, `.json` o `.csv`.
-2. La app prueba automáticamente cada proxy (estado, latencia, IP pública y país estimado).
-3. Elige un proxy funcional en la lista lateral.
-4. Navega en la barra de URL. Si no hay proxy activo, la app bloquea la navegación.
+## Formatos soportados
 
-## Formatos de proxies soportados
-
+- HTTP / HTTPS / SOCKS4 / SOCKS5
 - `ip:puerto`
-- `ip:puerto:usuario:contraseña`
-- `http://usuario:contraseña@ip:puerto`
+- `ip:puerto:user:pass`
+- `http://user:pass@ip:puerto`
 - `socks5://ip:puerto`
 
-## Cambiar proxy activo
+## Limitaciones reales
 
-- Haz clic en el proxy de la lista.
-- Solo proxies con estado `working` se pueden activar.
-- El indicador superior muestra el proxy activo, IP pública observada y URL actual.
-
-## Mitigación de fugas de IP real
-
-- La navegación se bloquea si no hay proxy funcional activo.
-- Electron se lanza con políticas WebRTC `disable_non_proxied_udp`.
-- Se usa una partición persistente por proxy (`persist:proxy-<id>`) para aislar cookies/sesión.
-- Se aplica `session.setProxy` por partición antes de navegar.
-
-> Nota: En escritorio no existe garantía 100% contra leaks en todos los escenarios/redes. Se recomienda validar con pruebas externas de DNS/WebRTC.
+El fingerprinting avanzado no puede ocultarse al 100% solo con configuración de Electron/Chromium.
+Para máxima privacidad real, combinar con sistema operativo endurecido, red aislada y validaciones externas periódicas.
 
 ## Uso legítimo
 
-Diseñado para privacidad, QA, pruebas geográficas, debugging de contenido regional y administración de conexiones.
-No incluye automatización de abuso, fraude ni bypass de seguridad.
+Privacidad, QA, verificación geográfica y pruebas web legítimas.
+No se incluye automatización de abuso/fraude.
